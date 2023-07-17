@@ -61,7 +61,7 @@ const Header = () => {
 
             {isOpen &&
               createPortal(
-                <LoginModal modalHandler={modalHandler} isOpen={isOpen} />,
+                <LoginModal modalHandler={modalHandler} />,
                 modalComponent
               )}
           </li>

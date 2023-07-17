@@ -2,21 +2,28 @@ import React, { useEffect } from "react";
 import InputBox from "./InputBox";
 import Button from "./Button";
 import { GrClose } from "react-icons/gr";
+import { motion } from "framer-motion";
 
-const LoginModal = ({ isOpen, modalHandler }) => {
-  if (!isOpen) {
-    return null;
-  }
-
+const LoginModal = ({ modalHandler }) => {
   const loginHandler = (e) => {
     e.preventDefault();
     modalHandler(false);
   };
 
   return (
-    <div className="absolute inset-0 bg-blue-400 bg-opacity-40 flex justify-center items-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="absolute inset-0 bg-blue-400 bg-opacity-40 flex justify-center items-center"
+    >
       {/* modal box */}
-      <div className="relative min-w-[500px] min-h-[500px] bg-white rounded-lg flex flex-col justify-center items-center shadow-black shadow-md">
+      <motion.div
+        initial={{ x: -500 }}
+        animate={{ x: 0 }}
+        transition={{ ease: "easeOut", duration: 1 }}
+        className="relative min-w-[500px] min-h-[500px] bg-white rounded-lg flex flex-col justify-center items-center shadow-black shadow-md"
+      >
         {/* modal header */}
         <div className="pb-6 pt-20">
           <h1 className="text-2xl font-semibold text-center">Login User</h1>
@@ -69,8 +76,8 @@ const LoginModal = ({ isOpen, modalHandler }) => {
             </span>
           </p>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
