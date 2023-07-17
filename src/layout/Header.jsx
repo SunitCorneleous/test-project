@@ -17,8 +17,6 @@ const Header = () => {
   ];
 
   const modalHandler = () => {
-    console.log("modal action");
-
     setIsOpen(!isOpen);
   };
 

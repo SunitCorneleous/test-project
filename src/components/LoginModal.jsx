@@ -3,10 +3,29 @@ import InputBox from "./InputBox";
 import Button from "./Button";
 import { GrClose } from "react-icons/gr";
 import { motion } from "framer-motion";
+import Encryption from "../utils/Encryption";
+import CryptoJS from "crypto-js";
 
 const LoginModal = ({ modalHandler }) => {
   const loginHandler = (e) => {
     e.preventDefault();
+
+    const form = e.target;
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const words = CryptoJS.MD5(password);
+
+    const encryption = new Encryption().getEncryptedData(
+      JSON.stringify({
+        UserName: email,
+        Password: words.toString(),
+      })
+    );
+
+    console.log(encryption);
+
     modalHandler(false);
   };
 
@@ -40,6 +59,7 @@ const LoginModal = ({ modalHandler }) => {
             <div>
               <p className="mb-1 text-gray-800 font-semibold">Email</p>
               <InputBox
+                name={"email"}
                 customClass={"mb-3 w-[350px]"}
                 type={"email"}
                 required={true}
@@ -49,6 +69,7 @@ const LoginModal = ({ modalHandler }) => {
             <div className="mt-2">
               <p className="mb-1 text-gray-800 font-semibold">Password</p>
               <InputBox
+                name={"password"}
                 customClass={"w-[350px]"}
                 type={"password"}
                 required={true}

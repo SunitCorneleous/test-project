@@ -1,8 +1,9 @@
 import React from "react";
 
-const InputBox = ({ customClass, type, required, placeholder }) => {
+const InputBox = ({ customClass, type, required, placeholder, name }) => {
   return (
     <input
+      name={name}
       required={required}
       type={type}
       placeholder={placeholder}
