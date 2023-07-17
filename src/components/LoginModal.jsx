@@ -36,6 +36,7 @@ const LoginModal = ({ isOpen, modalHandler }) => {
                 customClass={"mb-3 w-[350px]"}
                 type={"email"}
                 required={true}
+                placeholder={"Enter Name"}
               />
             </div>
             <div className="mt-2">
@@ -44,6 +45,7 @@ const LoginModal = ({ isOpen, modalHandler }) => {
                 customClass={"w-[350px]"}
                 type={"password"}
                 required={true}
+                placeholder={"Enter Password"}
               />
 
               <p className="underline text-blue-600 font-semibold cursor-pointer text-xs pt-2 text-end">
