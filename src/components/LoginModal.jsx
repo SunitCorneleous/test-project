@@ -14,7 +14,7 @@ const LoginModal = ({ isOpen, modalHandler }) => {
   };
 
   return (
-    <div className="z-50 absolute inset-0 bg-blue-400 bg-opacity-40 flex justify-center items-center ">
+    <div className="absolute inset-0 bg-blue-400 bg-opacity-40 flex justify-center items-center">
       {/* modal box */}
       <div className="relative min-w-[500px] min-h-[500px] bg-white rounded-lg flex flex-col justify-center items-center shadow-black shadow-md">
         {/* modal header */}

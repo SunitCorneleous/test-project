@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import LoginModal from "../components/LoginModal";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { createPortal } from "react-dom";
+
+const modalComponent = document.getElementById("modal-content");
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,10 +58,15 @@ const Header = () => {
               customClass={"ml-6"}
               actionHandler={modalHandler}
             ></Button>
+
+            {isOpen &&
+              createPortal(
+                <LoginModal modalHandler={modalHandler} isOpen={isOpen} />,
+                modalComponent
+              )}
           </li>
         </ul>
       </nav>
-      <LoginModal modalHandler={modalHandler} isOpen={isOpen} />
     </div>
   );
 };
