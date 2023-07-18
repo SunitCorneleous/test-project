@@ -6,17 +6,21 @@ import { motion } from "framer-motion";
 import Encryption from "../utils/Encryption";
 import CryptoJS from "crypto-js";
 import { useApi } from "../hooks/useApi";
+import { useForm } from "react-hook-form";
 
 const LoginModal = ({ modalHandler }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const { data, loading, error, fetchData } = useApi("LoginApi/Post_v2");
 
-  const loginHandler = async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-
-    const email = form.email.value;
-    const password = form.password.value;
+  const loginHandler = async (formData) => {
+    const password = formData.password;
+    const email = formData.email;
 
     const words = CryptoJS.MD5(password);
 
@@ -69,15 +73,24 @@ const LoginModal = ({ modalHandler }) => {
         </div>
         {/* modal body */}
         <div className="py-4 flex flex-col items-center">
-          <form onSubmit={loginHandler}>
+          <form onSubmit={handleSubmit(loginHandler)}>
             <div>
               <p className="mb-1 text-gray-800 font-semibold">Email</p>
               <InputBox
                 name={"email"}
-                customClass={"mb-3 w-[350px]"}
+                customClass={"mb-1 w-[350px]"}
                 type={"email"}
-                required={true}
                 placeholder={"Enter Name"}
+                register={{
+                  ...register("email", {
+                    required: "Email Address is required",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Enter valid email",
+                    },
+                  }),
+                }}
+                error={errors?.email?.message}
               />
             </div>
             <div className="mt-2">
@@ -86,8 +99,17 @@ const LoginModal = ({ modalHandler }) => {
                 name={"password"}
                 customClass={"w-[350px]"}
                 type={"password"}
-                required={true}
                 placeholder={"Enter Password"}
+                register={{
+                  ...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Minimum password length 6 characters",
+                    },
+                  }),
+                }}
+                error={errors?.password?.message}
               />
 
               <p className="underline text-blue-600 font-semibold cursor-pointer text-xs pt-2 text-end">
