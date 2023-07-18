@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import InputBox from "./InputBox";
 import Button from "./Button";
 import { GrClose } from "react-icons/gr";
 import { motion } from "framer-motion";
 import Encryption from "../utils/Encryption";
 import CryptoJS from "crypto-js";
+import { useApi } from "../hooks/useApi";
 
 const LoginModal = ({ modalHandler }) => {
-  const loginHandler = (e) => {
+  const { data, loading, error, fetchData } = useApi("LoginApi/Post_v2");
+
+  const loginHandler = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -24,9 +27,20 @@ const LoginModal = ({ modalHandler }) => {
       })
     );
 
-    console.log(encryption);
+    await fetchData({
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Data: encryption,
+      }),
+    });
 
-    modalHandler(false);
+    if (data && !loading) {
+      console.log(data && JSON.parse(data?.Data)[0]);
+    }
   };
 
   return (
@@ -85,6 +99,7 @@ const LoginModal = ({ modalHandler }) => {
               title={"Login"}
               customClass={"mt-6 w-[100px] mx-auto block"}
               buttonType={"submit"}
+              loading={loading}
             />
           </form>
         </div>
