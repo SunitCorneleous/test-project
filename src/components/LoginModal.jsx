@@ -79,7 +79,6 @@ const LoginModal = ({ modalHandler }) => {
               <InputBox
                 name={"email"}
                 customClass={"mb-1 w-[350px]"}
-                type={"email"}
                 placeholder={"Enter Name"}
                 register={{
                   ...register("email", {
